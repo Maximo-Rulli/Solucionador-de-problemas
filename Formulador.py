@@ -20,7 +20,7 @@ import tensorflow as tf
 modelo = tf.keras.models.load_model('modelo_GRU')
 
 #Importo el dataset para el Countvectorizer y tdidf
-df = pd.read_csv('Solucionador_dataset.csv', on_bad_lines='warn')
+df = pd.read_csv('Formulador_dataset.csv', on_bad_lines='warn')
 df[['Ejercicio', 'Tema']] = df['Ejercicio;Tema'].str.split(';', expand=True)
 del df['Ejercicio;Tema']
 df.drop_duplicates(inplace=True)
@@ -29,34 +29,41 @@ df.drop_duplicates(inplace=True)
 raiz=Tk()
 
 #Defino mis constantes y clases
+PADX=10
+PADY=10
 CLASES = 6 
 SIGNIFICADO = {'mru': 0, 'mruv': 1, 'tv': 2, 'tob': 3, 'mcu': 4, 'mcuv': 5}
-REDIM = 0.75
+REDIM = 0.65
 mru = Image.open('Ecuaciones/MRU.jpg')
 MRU = ImageTk.PhotoImage(mru.resize((round(mru.width*REDIM), round(mru.height*REDIM)), Image.Resampling.LANCZOS))
 mruv = Image.open('Ecuaciones/MRUV.jpg')
-MRUV = ImageTk.PhotoImage(mruv.resize((round(mru.width*REDIM), round(mru.height*REDIM)), Image.Resampling.LANCZOS))
+MRUV = ImageTk.PhotoImage(mruv.resize((round(mruv.width*REDIM), round(mruv.height*REDIM)), Image.Resampling.LANCZOS))
 tv = Image.open('Ecuaciones/TV.jpg')
-TV = ImageTk.PhotoImage(tv.resize((round(mru.width*REDIM), round(mru.height*REDIM)), Image.Resampling.LANCZOS))
+TV = ImageTk.PhotoImage(tv.resize((round(tv.width*REDIM), round(tv.height*REDIM)), Image.Resampling.LANCZOS))
 tob = Image.open('Ecuaciones/TOB.jpg')
-TOB = ImageTk.PhotoImage(tob.resize((round(mru.width*REDIM), round(mru.height*REDIM)), Image.Resampling.LANCZOS))
-"""mcu = Image.open('Ecuaciones/MRU.jpg')
-MCU = mru.resize((round(mru.width*0.8), round(mru.height*0.8)), Image.Resampling.LANCZOS)"""
+TOB = ImageTk.PhotoImage(tob.resize((round(tob.width*REDIM), round(tob.height*REDIM)), Image.Resampling.LANCZOS))
+mcu = Image.open('Ecuaciones/MCU.jpg')
+MCU = ImageTk.PhotoImage(mcu.resize((round(mcu.width*REDIM), round(mcu.height*REDIM)), Image.Resampling.LANCZOS))
+mcuv = Image.open('Ecuaciones/MCUV.jpg')
+MCUV = ImageTk.PhotoImage(mcuv.resize((round(mcuv.width*REDIM), round(mcuv.height*REDIM)), Image.Resampling.LANCZOS))
 
-FORMULAS = {'mru': MRU, 'mruv': MRUV, 'tv': TV, 'tob': TOB, 'mcu': [], 'mcuv': []}
+IMAGENES = {'mru': mru, 'mruv': mruv, 'tv': tv, 'tob': tob, 'mcu': mcu, 'mcuv': mcuv}
+FORMULAS = {'mru': MRU, 'mruv': MRUV, 'tv': TV, 'tob': TOB, 'mcu': MCU, 'mcuv': MCUV}
+
 clase_prob = dict.fromkeys(SIGNIFICADO, 0)
 
-raiz.geometry("800x600")
+raiz.geometry("1350x650")
 
 raiz.resizable(width=False, height=False)
 
-raiz.title("Solucionador de problemas")
+raiz.title("Formulador Físico")
 
-color = "#333333"
+COLOR = "#333333"
 
-raiz.config(bg=color)
+raiz.config(bg=COLOR)
 
 raiz.iconbitmap("LOGO.ico")
+
 
 #Elimino caracteres especiales
 special_character_remover = re.compile('[/(){}\[\]\|@,;]')
@@ -82,19 +89,41 @@ count_vectorizer=CountVectorizer(min_df=1, max_df=0.9, decode_error='warn')
 count_vectorized=count_vectorizer.fit_transform(df.Ejercicio)
 
 #Creo el Frame principal
-miFrame=Frame(raiz, width=800, height=600)
+miFrame=Frame(raiz, width=1350, height=700)
 
-miFrame.config(bg=color)
+miFrame.config(bg=COLOR)
 
 miFrame.pack()
 
-leyenda_texto = Label(miFrame, text="Ingrese el problema en la casilla de abajo:", fg = "white", font = ("Calibri", 10), bg=color)
+leyenda_texto = Label(miFrame, text="Ingrese el problema en la casilla de abajo:", fg = "white", font = ("Calibri", 10), bg=COLOR)
 
-leyenda_texto.grid(row=0, column=0, pady=2)
+leyenda_texto.place(x=100, y=2)
 
 text_area = ScrolledText(miFrame, wrap = tk.WORD, width = 45, height = 10, font = ("Calibri", 13))
   
-text_area.grid(row = 1, column = 0, columnspan=5, pady=3)
+text_area.place(x=10, y=25)
+
+#Labels de las imagenes
+label1 = Label(miFrame, image='', bg=COLOR)
+label1.place(x=10, y= 1300)
+label2 = Label(miFrame, image='', bg=COLOR)
+label2.place(x=20, y= 1300)
+label3 = Label(miFrame, image='', bg=COLOR)
+label3.place(x=30, y= 1300)
+label4 = Label(miFrame, image='', bg=COLOR)
+label4.place(x=40, y= 1300)
+label5 = Label(miFrame, image='', bg=COLOR)
+label5.place(x=50, y= 1300)
+label6 = Label(miFrame, image='', bg=COLOR)
+label6.place(x=60, y= 1300)
+label7 = Label(miFrame, image='', bg=COLOR)
+label7.place(x=70, y= 1300)
+label8 = Label(miFrame, image='', bg=COLOR)
+label8.place(x=80, y= 1300)
+label9 = Label(miFrame, image='', bg=COLOR)
+label9.place(x=90, y= 1300)
+label10 = Label(miFrame, image='', bg=COLOR)
+label10.place(x=100, y= 1300)
 
 #Función transformar texto, recibe como parametro el problema en pantalla
 def predecir(problema):
@@ -122,10 +151,31 @@ def predecir(problema):
     print(y_pred)"""
 
 
-def mostrar(pred):
+def mostrar(pred):    
     cont_lis = 0
     cont_mos = 0
     lista_mostrar = []
+    #Reseteo los labels y posiciones
+    label1.configure(image='')
+    label2.configure(image='')
+    label3.configure(image='')
+    label4.configure(image='')
+    label5.configure(image='')
+    label6.configure(image='')
+    label7.configure(image='')
+    label8.configure(image='')
+    label9.configure(image='')
+    label10.configure(image='')
+    label2_x = 0
+    label3_x = 0 
+    label4_x = 0 
+    label5_x = 0 
+    label6_x = 0 
+    label7_x = 0 
+    label8_x = 0
+    label9_x = 0
+    label10_x = 0
+
 
     for i in clase_prob.keys():
         clase_prob[i] = pred[cont_lis]
@@ -144,141 +194,65 @@ def mostrar(pred):
         cont_mos += 1
     print(lista_mostrar)
     
+    
     #Dependiendo de cuantas respuestas haya imprimó las ecuaciones características
-    if len(lista_mostrar) == 1:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        
-    elif len(lista_mostrar) == 2:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
+    if len(lista_mostrar) >= 1:
+        label1.configure(image = FORMULAS[lista_mostrar[0]])
+        label1.place(x=PADX, y=300)
 
-    elif len(lista_mostrar) == 3:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
+    
+    if len(lista_mostrar) >= 2:
+        label2.configure(image = FORMULAS[lista_mostrar[1]])
+        label2_x = round((IMAGENES[lista_mostrar[0]].width)*REDIM)
+        label2.place(x=PADX+label2_x, y=300)
 
-    elif len(lista_mostrar) == 4:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
+    if len(lista_mostrar) >= 3:
+        label3.configure(image = FORMULAS[lista_mostrar[2]])
+        label3_x = label2_x+round((IMAGENES[lista_mostrar[1]].width)*REDIM)
+        label3.place(x=PADX+label3_x, y=320)
 
-    elif len(lista_mostrar) == 5:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
-        label5 = Label(miFrame, image = FORMULAS[lista_mostrar[4]])
-        label5.grid(row = 3, column = 4)
+    
+    if len(lista_mostrar) >= 4:
+        label4.configure(image = FORMULAS[lista_mostrar[3]])
+        label4_x = label3_x+round((IMAGENES[lista_mostrar[2]].width)*REDIM)
+        label4.place(x=PADX+label4_x, y=320)
 
-    elif len(lista_mostrar) == 6:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
-        label5 = Label(miFrame, image = FORMULAS[lista_mostrar[4]])
-        label5.grid(row = 3, column = 4)
-        label6 = Label(miFrame, image = FORMULAS[lista_mostrar[5]])
-        label6.grid(row = 0, column = 1)
+    if len(lista_mostrar) >= 5:
+        label5.configure(image = FORMULAS[lista_mostrar[4]])
+        label5_x = label4_x+round((IMAGENES[lista_mostrar[3]].width)*REDIM)
+        label5.place(x=PADX+label5_x, y=320)
 
-    elif len(lista_mostrar) == 7:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
-        label5 = Label(miFrame, image = FORMULAS[lista_mostrar[4]])
-        label5.grid(row = 3, column = 4)
-        label6 = Label(miFrame, image = FORMULAS[lista_mostrar[5]])
-        label6.grid(row = 0, column = 1)
-        label7 = Label(miFrame, image = FORMULAS[lista_mostrar[6]])
-        label7.grid(row = 0, column = 2)
+    if len(lista_mostrar) >= 6:
+        label6.configure(image = FORMULAS[lista_mostrar[5]])
+        label6_x = 450
+        label6.place(x=label6_x, y=10)
 
-    elif len(lista_mostrar) == 8:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
-        label5 = Label(miFrame, image = FORMULAS[lista_mostrar[4]])
-        label5.grid(row = 3, column = 4)
-        label6 = Label(miFrame, image = FORMULAS[lista_mostrar[5]])
-        label6.grid(row = 0, column = 1)
-        label7 = Label(miFrame, image = FORMULAS[lista_mostrar[6]])
-        label7.grid(row = 0, column = 2)
-        label8 = Label(miFrame, image = FORMULAS[lista_mostrar[7]])
-        label8.grid(row = 1, column = 1)
+    if len(lista_mostrar) >= 7:
+        label7.configure(image = FORMULAS[lista_mostrar[6]])
+        label7_x = label6_x+round((IMAGENES[lista_mostrar[5]].width)*REDIM)
+        label7.place(x=label7_x, y=10)
 
-    elif len(lista_mostrar) == 9:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
-        label5 = Label(miFrame, image = FORMULAS[lista_mostrar[4]])
-        label5.grid(row = 3, column = 4)
-        label6 = Label(miFrame, image = FORMULAS[lista_mostrar[5]])
-        label6.grid(row = 0, column = 1)
-        label7 = Label(miFrame, image = FORMULAS[lista_mostrar[6]])
-        label7.grid(row = 0, column = 2)
-        label8 = Label(miFrame, image = FORMULAS[lista_mostrar[7]])
-        label8.grid(row = 1, column = 1)
-        label9 = Label(miFrame, image = FORMULAS[lista_mostrar[8]])
-        label9.grid(row = 1, column = 2)
+    if len(lista_mostrar) >= 8:
+        label8.configure(image = FORMULAS[lista_mostrar[7]])
+        label8_x = label7_x+round((IMAGENES[lista_mostrar[6]].width)*REDIM)
+        label8.place(x=label8_x, y=10)
 
-    elif len(lista_mostrar) == 10:
-        label1 = Label(miFrame, image = FORMULAS[lista_mostrar[0]])
-        label1.grid(row = 3, column = 0)
-        label2 = Label(miFrame, image = FORMULAS[lista_mostrar[1]])
-        label2.grid(row = 3, column = 1)
-        label3 = Label(miFrame, image = FORMULAS[lista_mostrar[2]])
-        label3.grid(row = 3, column = 2)
-        label4 = Label(miFrame, image = FORMULAS[lista_mostrar[3]])
-        label4.grid(row = 3, column = 3)
-        label5 = Label(miFrame, image = FORMULAS[lista_mostrar[4]])
-        label5.grid(row = 3, column = 4)
-        label6 = Label(miFrame, image = FORMULAS[lista_mostrar[5]])
-        label6.grid(row = 0, column = 1)
-        label7 = Label(miFrame, image = FORMULAS[lista_mostrar[6]])
-        label7.grid(row = 0, column = 2)
-        label8 = Label(miFrame, image = FORMULAS[lista_mostrar[7]])
-        label8.grid(row = 1, column = 1)
-        label9 = Label(miFrame, image = FORMULAS[lista_mostrar[8]])
-        label9.grid(row = 1, column = 2)
-        label10 = Label(miFrame, image = FORMULAS[lista_mostrar[9]])
-        label10.grid(row = 3, column = 5)
+    if len(lista_mostrar) >= 9:
+        label9.configure(image = FORMULAS[lista_mostrar[8]])
+        label9_x = label8_x+round((IMAGENES[lista_mostrar[7]].width)*REDIM)
+        label9.place(x=label9_x, y=10)
+
+    
+    if len(lista_mostrar) >= 10:
+        label10.configure(image = FORMULAS[lista_mostrar[9]])
+        label10_x = label5_x+round((IMAGENES[lista_mostrar[4]].width)*REDIM)
+        label10.place(x=PADX+label10_x, y=320)
+    
  
     
 
 #Creo el botón de predecir
 predecir_but=Button(miFrame, text="Formular", bg="orange2", width=15, height=2, command=lambda:predecir(text_area.get("1.0", tk.END)))
-predecir_but.grid(row=2, column=0, pady=5, padx=5)
+predecir_but.place(x=150, y=250)
 
 raiz.mainloop()
